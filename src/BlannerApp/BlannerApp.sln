@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlannerApp", "BlannerApp\BlannerApp.csproj", "{F30CEAF7-2DF1-4F63-8397-A550E79DDCC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlannerApp", "BlannerApp\BlannerApp.csproj", "{F30CEAF7-2DF1-4F63-8397-A550E79DDCC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlannerApp.Shared", "PlannerApp.Shared\PlannerApp.Shared.csproj", "{AE809A85-9BD0-4488-9BF2-CE2111965E4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlannerApp.Shared", "PlannerApp.Shared\PlannerApp.Shared.csproj", "{AE809A85-9BD0-4488-9BF2-CE2111965E4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

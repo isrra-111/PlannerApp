@@ -1,0 +1,28 @@
+﻿@namespace BlannerApp.Components
+
+
+<EditForm Model="_model" OnInvalidSubmit="LoginUserAsync">
+
+    <DataAnnotationsValidator/>
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h4">Welcome To Planner System</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudTextField Label="Email" HelperText="Required" @bind-Value="_model.Email"/>
+            <MudTextField Label="Password" InputType="InputType.Password"  HelperText="Required" @bind-Value="_model.Password" />
+
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Login</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Class="ml-1">Create Account</MudButton>
+        </MudCardActions>
+    </MudCard>
+</EditForm>
+
+
+@code {
+
+}
