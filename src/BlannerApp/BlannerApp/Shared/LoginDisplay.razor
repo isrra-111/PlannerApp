@@ -4,11 +4,11 @@
 @inject NavigationManager Navigation
 <AuthorizeView>
     <Authorized>
-        <MudMenu Icon="@Icons.Material.Filled.Person"
+        <MudMenu Icon="@Icons.Material.Filled.Person" 
          Color="Color.Secondary" 
          AriaLabel="Open user menu">
     <MudMenuItem>Welcome @context.User.FindFirst(ClaimTypes.GivenName).Value</MudMenuItem>
-    <MudMenuItem>LogOut</MudMenuItem>
+    <MudMenuItem OnClick="LogOutAsync">LogOut</MudMenuItem>
 </MudMenu>
     </Authorized>
     <NotAuthorized>

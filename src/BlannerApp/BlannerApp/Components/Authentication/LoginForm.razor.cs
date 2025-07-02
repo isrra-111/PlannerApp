@@ -27,7 +27,7 @@ namespace BlannerApp.Components
 
         private bool _isBusy = false;
         private string _errorMessage=string.Empty;
-        private async Task LoginUserAsync()
+        public async Task LoginUserAsync()
         {
             _isBusy=true;
             _errorMessage=string.Empty;
