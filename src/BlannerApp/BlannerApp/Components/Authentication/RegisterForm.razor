@@ -1,7 +1,37 @@
-﻿@page "/authentication/register"
-@namespace BlannerApp.Components
+﻿
+@namespace BlannerApp.Components.Authentication
 
-<h3>RegisterForm</h3>
+<EditForm Model="_model" OnValidSubmit="RegisterUserAsync">
+
+    <FluentValidationValidator />
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h4">Welcome To Planner System</MudText>
+                <MudText Typo="Typo.h4">Create a new Account</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudTextField Label="Email" HelperText="Required" @bind-Value="_model.Email" />
+            <MudTextField Label="First Name" HelperText="Required" @bind-Value="_model.FirstName" />
+            <MudTextField Label="Last Name" HelperText="Required" @bind-Value="_model.LastName" />
+            <MudTextField Label="Password" InputType="InputType.Password" HelperText="Required" @bind-Value="_model.Password" />
+            <MudTextField Label="Confirm Password" InputType="InputType.Password" HelperText="Required" @bind-Value="_model.ConfirmPassword" />
+            
+            
+            <ValidationSummary />
+
+            @if (!string.IsNullOrWhiteSpace(_errorMessage))
+            {
+                <MudAlert Severity="Severity.Error" Class="my-2" Variant="Variant.Filled">@_errorMessage</MudAlert>
+            }
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled" Disabled="_isBusy">Create Account</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="()=>RedirectToLogin()" Class="ml-1" Disabled="_isBusy">Login</MudButton>
+        </MudCardActions>
+    </MudCard>
+</EditForm>
 
 @code {
 

@@ -17,7 +17,7 @@ namespace PlannerApp.Client.Services
         }
         public async Task<ApiResponse> RegisterUserAsync(RegisterRequest model)
         {
-            var response = await _client.PostAsJsonAsync("/api/auth/register", model);
+            var response = await _client.PostAsJsonAsync("/api/v2/auth/register", model);
             if(response.IsSuccessStatusCode)
             {
 

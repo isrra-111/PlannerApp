@@ -12,23 +12,41 @@ public class JwtAuthenticationStateProvider: AuthenticationStateProvider
         
         _storage = storage;
     }
-    public async override Task<AuthenticationState> GetAuthenticationStateAsync()
+    public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        if(await _storage.ContainKeyAsync("access_token"))
+        var token = await _storage.GetItemAsStringAsync("access_token");
+
+        if (string.IsNullOrWhiteSpace(token))
         {
-            //The User is Logged in
-            var tokenAsString = await _storage.GetItemAsStringAsync("access_token");
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var token = tokenHandler.ReadJwtToken(tokenAsString);
-            var identity=new ClaimsIdentity(token.Claims,"Bearer");
-            var user=new ClaimsPrincipal(identity);
-            var authState = new AuthenticationState(user);
-
-            NotifyAuthenticationStateChanged(Task.FromResult(authState));
-            return authState;
+            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
-        return new AuthenticationState(new ClaimsPrincipal()); //Empty claims principal means no identity and the user is not logged in
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var jwtToken = tokenHandler.ReadJwtToken(token);
+        var identity = new ClaimsIdentity(jwtToken.Claims, "Bearer");
+        var user = new ClaimsPrincipal(identity);
+
+        return new AuthenticationState(user);
+    }
+
+    // Call this after login
+    public async Task NotifyUserAuthentication(string token)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var jwtToken = tokenHandler.ReadJwtToken(token);
+        var identity = new ClaimsIdentity(jwtToken.Claims, "Bearer");
+        var user = new ClaimsPrincipal(identity);
+
+        var authState = Task.FromResult(new AuthenticationState(user));
+        NotifyAuthenticationStateChanged(authState);
+    }
+
+    // Call this after logout
+    public void NotifyUserLogout()
+    {
+        var anonymousUser = new ClaimsPrincipal(new ClaimsIdentity());
+        var authState = Task.FromResult(new AuthenticationState(anonymousUser));
+        NotifyAuthenticationStateChanged(authState);
     }
 
 }

@@ -1,7 +1,7 @@
-﻿@namespace BlannerApp.Components
+﻿@namespace BlannerApp.Components.Authentication
 
 
-<EditForm Model="_model" OnInvalidSubmit="LoginUserAsync">
+<EditForm Model="_model" OnValidSubmit="LoginUserAsync">
 
     <DataAnnotationsValidator/>
     <MudCard>
@@ -22,7 +22,7 @@
         </MudCardContent>
         <MudCardActions>
             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="_isBusy">Login</MudButton>
-            <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Class="ml-1" Disabled="_isBusy">Create Account</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Class="ml-1" OnClick="()=>RedirectToRegister()" Disabled="_isBusy">Create Account</MudButton>
         </MudCardActions>
     </MudCard>
 </EditForm>

@@ -5,7 +5,7 @@ using PlannerApp.Shared.Models;
 using PlannerApp.Shared.Responses;
 using System.Net.Http.Json;
 
-namespace BlannerApp.Components
+namespace BlannerApp.Components.Authentication
 {
     public partial class LoginForm:ComponentBase
     {
@@ -27,12 +27,12 @@ namespace BlannerApp.Components
 
         private bool _isBusy = false;
         private string _errorMessage=string.Empty;
-        public async Task LoginUserAsync()
+        private async Task LoginUserAsync()
         {
             _isBusy=true;
             _errorMessage=string.Empty;
 
-            var response = await HttpClient.PostAsJsonAsync("/api/auth/login",_model);
+            var response = await HttpClient.PostAsJsonAsync("/api/v2/auth/login",_model);
 
             if (response.IsSuccessStatusCode)
             {
@@ -40,7 +40,9 @@ namespace BlannerApp.Components
                 //store it in local Storage
                 await Storage.SetItemAsStringAsync("access_token", result.Value.Token);
                 await Storage.SetItemAsync<DateTime>("expiry_date", result.Value.ExpiryDate);
-                await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+                var jwtProvider = (JwtAuthenticationStateProvider)AuthenticationStateProvider;
+                await jwtProvider.NotifyUserAuthentication(result.Value.Token);
 
                 Navigation.NavigateTo("/");
             }
@@ -51,6 +53,10 @@ namespace BlannerApp.Components
                 _errorMessage=errorResult.Message ;
             }
             _isBusy=false;
+        }
+        private void RedirectToRegister()
+        {
+            Navigation.NavigateTo("/authentciation/register");
         }
     }
 }
